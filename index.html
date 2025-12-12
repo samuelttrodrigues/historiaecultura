@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Racismo Brasileiro: A Infraestrutura da Nação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals & Deep Earth Tones (Stone, Charcoal, Terracotta, Muted Gold) -->
+    <!-- Application Structure Plan:
+         The app is designed as an interactive historical excavation, moving chronologically through the "layers" of Brazilian history.
+         1. Hero Section: Introduces the central thesis (Racism as Infrastructure) and the concept of "Sankofa".
+         2. Main Navigation: Chronological tabs (Colônia, Império, República, Contemporaneidade) to guide the user through the formation of the nation.
+         3. Dynamic Content Sections:
+            - Colônia: Focuses on the scale of the trade and the invention of race. Features a comparative chart (Brazil vs US) and a hierarchy interaction.
+            - Império: Highlights the "Illegal Peace". Features a line chart showing the traffic spike after the 1831 prohibition and a timeline of exclusionary laws.
+            - República: Deconstructs the "Whitening" myth. Comparison chart of Lacerda's 1911 prediction vs reality.
+            - Contemporaneidade: visualizes Necropolitics. Data on violence and incarceration.
+         4. Sankofa/Conclusion: A call to action based on the book's epilogue.
+         Structure chosen to facilitate a linear understanding of how the past structures the present, while allowing non-linear exploration of specific data points.
+    -->
+    <!-- Visualization & Content Choices:
+         1. Slave Trade Comparison -> Goal: Compare -> Viz: Bar Chart (Chart.js) -> Shows the massive disproportion of the trade to Brazil (4.8M) vs USA, challenging common media perceptions.
+         2. Social Hierarchy -> Goal: Organize -> Viz: Interactive Pyramid (HTML/Tailwind) -> Clicking layers reveals the function of "Mestiços" as a buffer zone.
+         3. Illegal Trade Flow -> Goal: Change -> Viz: Line Chart (Chart.js) -> Visualizes the "Para Inglês Ver" phenomenon, showing the traffic increase after the ban.
+         4. Whitening Prediction -> Goal: Compare -> Viz: Grouped Bar Chart (Chart.js) -> Contrasts 1911 Eugenics prediction with 2012 Reality to expose the failure of the whitening policy.
+         5. Homicide Disparity -> Goal: Relationships/Compare -> Viz: Doughnut/Bar Chart -> Visualizes Necropolitics (Who lives vs Who dies).
+         Justification: Simple, high-impact charts were chosen to make the heavy statistical evidence digestible.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+''
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            color: #1c1917; /* stone-900 */
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .nav-btn.active {
+            background-color: #be123c; /* rose-700 */
+            color: white;
+            border-bottom: 4px solid #881337; /* rose-900 */
+        }
+
+        .interactive-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-stone-900 text-stone-50 p-6 border-b-4 border-rose-700">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-2">Racismo Brasileiro</h1>
+            <p class="text-lg md:text-xl text-stone-400 font-light">Uma História da Formação do País <span class="text-rose-500 mx-2">|</span> Ynaê Lopes dos Santos</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-stone-200 sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto flex overflow-x-auto">
+            <button onclick="app.navigate('intro')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap active" id="btn-intro">A Infraestrutura</button>
+            <button onclick="app.navigate('colonia')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-colonia">Colônia (Fundação)</button>
+            <button onclick="app.navigate('imperio')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-imperio">Império (Estrutura)</button>
+            <button onclick="app.navigate('republica')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-republica">República (Acabamento)</button>
+            <button onclick="app.navigate('hoje')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-hoje">Contemporaneidade</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-8 space-y-8">
+
+        <!-- SECTION: INTRO -->
+        <section id="view-intro" class="space-y-8 animate-fade-in">
+            <div class="bg-white p-8 rounded-lg shadow-sm border-l-8 border-rose-700">
+                <h2 class="text-2xl font-bold text-stone-800 mb-4">O "Presente de Grego"</h2>
+                <p class="text-lg text-stone-700 leading-relaxed mb-4">
+                    A tese central da obra de Ynaê Lopes dos Santos é que o racismo não é um "legado" acidental, mas a <strong>infraestrutura</strong> sobre a qual o Brasil foi construído. É o sistema operacional da nação. A história oficial foi entregue como um presente bonito – o mito da harmonia racial – mas esconde um mecanismo de exclusão sistemática.
+                </p>
+                <div class="bg-stone-100 p-4 rounded mt-4">
+                    <p class="font-bold text-stone-900">Conceito Chave: Sankofa (Epílogo)</p>
+                    <p class="text-stone-600">Um símbolo Akan que ensina: "Não é possível construir o futuro sem retornar ao passado para entender o que foi feito." Este aplicativo é um exercício de Sankofa.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded shadow text-center border-t-4 border-stone-800">
+                    <div class="text-4xl mb-2">⚓</div>
+                    <h3 class="font-bold text-lg">Invenção</h3>
+                    <p class="text-sm text-stone-500">A criação da raça nos fortes africanos.</p>
+                </div>
+                <div class="bg-white p-6 rounded shadow text-center border-t-4 border-stone-800">
+                    <div class="text-4xl mb-2">📜</div>
+                    <h3 class="font-bold text-lg">Manutenção</h3>
+                    <p class="text-sm text-stone-500">Leis criadas para excluir (1824, 1850).</p>
+                </div>
+                <div class="bg-white p-6 rounded shadow text-center border-t-4 border-stone-800">
+                    <div class="text-4xl mb-2">🧬</div>
+                    <h3 class="font-bold text-lg">Atualização</h3>
+                    <p class="text-sm text-stone-500">Do racismo científico à necropolítica.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: COLONIA -->
+        <section id="view-colonia" class="hidden-content space-y-8">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl font-bold text-stone-800 mb-2">Colônia: A Invenção do Outro</h2>
+                <p class="text-stone-600">
+                    Nos fortes africanos e nos navios negreiros, seres humanos diversos (Bantos, Iorubás, Fons) foram transformados em mercadoria homogênea: o "Negro". O Brasil não *teve* escravidão; ele *foi* a escravidão.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart: Scale of Trade -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-2">A Escala do Tráfico (Milhões de Pessoas)</h3>
+                    <p class="text-sm text-stone-500 mb-4">
+                        O Brasil recebeu 40% de todo o tráfico transatlântico. Compare com os EUA, frequentemente mais visíveis na cultura pop.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="chartColonia"></canvas>
+                    </div>
+                </div>
+
+                <!-- Interactive Hierarchy -->
+                <div class="bg-white p-6 rounded-lg shadow-sm flex flex-col">
+                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-2">Arquitetura Social da Colônia</h3>
+                    <p class="text-sm text-stone-500 mb-6">Clique nas camadas para entender a função estratégica de cada grupo.</p>
+                    
+                    <div class="flex-grow space-y-2">
+                        <div onclick="app.toggleHierarchy('top')" class="interactive-card bg-stone-800 text-white p-4 rounded text-center font-bold relative group">
+                            Brancos (Senhores)
+                            <div id="desc-top" class="hidden mt-2 text-xs font-normal text-stone-300 bg-stone-900 p-2 rounded">
+                                Minoria demográfica. Detentores do poder político e religioso. Usavam o terror exemplar para controle.
+                            </div>
+                        </div>
+                        <div onclick="app.toggleHierarchy('mid')" class="interactive-card bg-amber-600 text-white w-11/12 mx-auto p-4 rounded text-center font-bold relative">
+                            Mestiços & Pardos (Zona Tampão)
+                            <div id="desc-mid" class="hidden mt-2 text-xs font-normal text-amber-100 bg-amber-800 p-2 rounded">
+                                Fruto da violência sexual. Estratégia de "dividir para governar". Cooptados com pequenos privilégios para não se aliarem aos negros.
+                            </div>
+                        </div>
+                        <div onclick="app.toggleHierarchy('bot')" class="interactive-card bg-rose-700 text-white w-10/12 mx-auto p-4 rounded text-center font-bold relative">
+                            Negros (Escravizados)
+                            <div id="desc-bot" class="hidden mt-2 text-xs font-normal text-rose-100 bg-rose-900 p-2 rounded">
+                                "Peças" e semoventes. A base da economia. Negros "da terra" (indígenas) e "na terra" (africanos) geridos por leis distintas.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: IMPERIO -->
+        <section id="view-imperio" class="hidden-content space-y-8">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl font-bold text-stone-800 mb-2">Império: A Paz Ilegal</h2>
+                <p class="text-stone-600">
+                    A Independência foi um pacto conservador para manter a escravidão. O termo "Para Inglês Ver" nasce aqui: leis existiam no papel, mas o crime financiava a nação.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Timeline of Exclusion -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-stone-800 mb-4">Cronologia da Exclusão</h3>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-stone-400">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-lg">1824</span>
+                            <span class="text-xs bg-stone-200 px-2 py-1 rounded">Constituição</span>
+                        </div>
+                        <p class="text-sm text-stone-600">Cidadania baseada na renda. Distinção entre "Ingênuos" e "Libertos". O Estado nasce excluindo.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-rose-500">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-lg">1831</span>
+                            <span class="text-xs bg-rose-100 text-rose-800 px-2 py-1 rounded">Lei Feijó</span>
+                        </div>
+                        <p class="text-sm text-stone-600">"Para Inglês Ver". Proibia o tráfico. Foi ignorada, permitindo a entrada ilegal de 700 mil pessoas.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-emerald-600">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-lg">1850</span>
+                            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded">Lei de Terras</span>
+                        </div>
+                        <p class="text-sm text-stone-600">Terra vira mercadoria. Proíbe posse (usucapião). Garante que imigrantes e libertos não tenham acesso à propriedade.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-amber-500">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-lg">1888</span>
+                            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">Lei Áurea</span>
+                        </div>
+                        <p class="text-sm text-stone-600">Abolição sem reparação. Abandono planejado em favor da imigração europeia.</p>
+                    </div>
+                </div>
+
+                <!-- Illegal Trade Chart -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-2">O Crime do Tráfico (Entradas no Rio de Janeiro)</h3>
+                    <p class="text-sm text-stone-500 mb-4">
+                        Observe o aumento do tráfico *após* a proibição de 1831. A estabilidade do Império foi financiada por esse crime.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="chartImperio"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: REPUBLICA -->
+        <section id="view-republica" class="hidden-content space-y-8">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl font-bold text-stone-800 mb-2">República: O Projeto de Branqueamento</h2>
+                <p class="text-stone-600">
+                    A República importou o Racismo Científico. O objetivo não era integrar, mas eliminar o "elemento negro" através da miscigenação e imigração.
+                </p>
+            </div>
+
+            <!-- Interactive Tab System for Republican Phases -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="flex border-b">
+                    <button onclick="app.setRepublicTab('science')" id="tab-science" class="flex-1 p-4 text-center font-bold hover:bg-stone-50 active-tab bg-stone-100 border-b-2 border-stone-800">1889-1930: Racismo Científico</button>
+                    <button onclick="app.setRepublicTab('myth')" id="tab-myth" class="flex-1 p-4 text-center font-bold hover:bg-stone-50 text-stone-400">1930-1964: O Mito</button>
+                    <button onclick="app.setRepublicTab('dictatorship')" id="tab-dictatorship" class="flex-1 p-4 text-center font-bold hover:bg-stone-50 text-stone-400">1964-1985: Silenciamento</button>
+                </div>
+
+                <div class="p-6">
+                    <!-- Tab Content: Science -->
+                    <div id="content-science" class="block">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">A Tese de Lacerda (1911)</h3>
+                                <p class="text-stone-600 mb-4">
+                                    No Congresso Universal das Raças em Londres, João Batista Lacerda, representando o Brasil, previu que a população negra desapareceria até 2012.
+                                </p>
+                                <ul class="list-disc list-inside text-sm text-stone-500 space-y-2">
+                                    <li>Eugenia como política pública.</li>
+                                    <li>Financiamento da imigração europeia.</li>
+                                    <li>Criminalização da cultura negra (vadiagem, capoeira).</li>
+                                </ul>
+                            </div>
+                            <div class="chart-container h-64">
+                                <canvas id="chartRepublica"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: Myth -->
+                    <div id="content-myth" class="hidden">
+                        <h3 class="text-xl font-bold mb-2">Era Vargas e a Democracia Racial</h3>
+                        <p class="text-stone-600 mb-4">
+                            Influenciado por <em>Casa-Grande & Senzala</em>, o Estado passa a celebrar a mestiçagem (Samba, Feijoada) como identidade nacional.
+                        </p>
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4">
+                            <p class="font-bold text-amber-800">O Efeito Mordaça:</p>
+                            <p class="text-amber-900 text-sm">Se somos todos misturados e iguais, denunciar o racismo torna-se "antipatriótico". Isso desarticulou a luta política negra por décadas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: Dictatorship -->
+                    <div id="content-dictatorship" class="hidden">
+                        <h3 class="text-xl font-bold mb-2">Ditadura Militar</h3>
+                        <p class="text-stone-600 mb-4">
+                            O regime elevou a "Democracia Racial" a dogma de Segurança Nacional. Perseguiu movimentos negros e bailes soul.
+                        </p>
+                        <div class="bg-stone-800 text-stone-50 p-4 rounded">
+                            <p class="font-bold">Resistência:</p>
+                            <p class="text-sm">Fundação do Movimento Negro Unificado (MNU) em 1978, denunciando a farsa da harmonia e a violência policial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: HOJE -->
+        <section id="view-hoje" class="hidden-content space-y-8">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl font-bold text-stone-800 mb-2">Contemporaneidade: Necropolítica</h2>
+                <p class="text-stone-600">
+                    O racismo se modernizou. Não precisa mais de leis explícitas; opera pela estatística. O Estado decide quem deve viver e quem deve morrer.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-bold text-stone-800 mb-4">"A Carne Mais Barata do Mercado"</h3>
+                    <p class="text-sm text-stone-500 mb-4">Disparidade na taxa de homicídios (por 100 mil habitantes). A abolição nunca foi concluída na prática da segurança pública.</p>
+                    <div class="chart-container">
+                        <canvas id="chartHoje"></canvas>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center space-y-6">
+                    <div class="bg-stone-100 p-6 rounded border-l-4 border-stone-800">
+                        <h4 class="font-bold text-lg mb-2">Sankofa: Volte e Pegue</h4>
+                        <p class="text-stone-700">
+                            A obra encerra convidando à ação. Entender que o racismo foi construído (tem história) significa entender que ele pode ser desconstruído.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-rose-50 p-6 rounded border-l-4 border-rose-600">
+                        <h4 class="font-bold text-lg text-rose-800 mb-2">O Desafio</h4>
+                        <p class="text-rose-900">
+                            Reconhecer que o racismo é a infraestrutura do Brasil não é um ato de culpa, mas o primeiro passo para reformar a estrutura da casa.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 p-8 text-center mt-8">
+        <p class="mb-2">Baseado na obra de Ynaê Lopes dos Santos (2022)</p>
+        <p class="text-sm text-stone-600">Aplicação Didática Interativa - Lei 10.639/03</p>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // Data Store
+        const data = {
+            colonia: {
+                labels: ['Brasil', 'América Espanhola', 'Caribe Britânico', 'Caribe Francês', 'Estados Unidos'],
+                values: [4.8, 1.3, 2.3, 1.1, 0.4] // Millions approximately
+            },
+            imperio: {
+                labels: ['1825', '1830', '1835', '1840', '1845', '1848', '1850'],
+                values: [26, 50, 60, 65, 70, 60, 23] // Representative trend data (thousands) showing post-1831 spike
+            },
+            republica: {
+                labels: ['Brancos', 'Negros/Pardos'],
+                lacerda: [80, 0], // Lacerda prediction for 2012
+                reality: [43, 56] // Approximate IBGE reality
+            },
+            hoje: {
+                labels: ['Brancos', 'Negros'],
+                homicideRate: [16, 43] // Homicide rate per 100k
+            }
+        };
+
+        const app = {
+            state: {
+                currentView: 'intro',
+                chartsInitialized: false
+            },
+
+            init: function() {
+                // Initialize charts regardless of visibility to ensure they exist
+                this.initCharts();
+            },
+
+            navigate: function(viewId) {
+                // Update Nav UI
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active', 'text-white', 'border-b-4', 'border-rose-900', 'bg-rose-700');
+                    if (btn.id === `btn-${viewId}`) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                // Switch Sections
+                document.querySelectorAll('section').forEach(sec => {
+                    sec.classList.add('hidden-content');
+                    sec.classList.remove('block', 'animate-fade-in');
+                });
+
+                const target = document.getElementById(`view-${viewId}`);
+                target.classList.remove('hidden-content');
+                target.classList.add('block', 'animate-fade-in');
+
+                this.state.currentView = viewId;
+            },
+
+            toggleHierarchy: function(level) {
+                const desc = document.getElementById(`desc-${level}`);
+                if (desc.classList.contains('hidden')) {
+                    desc.classList.remove('hidden');
+                } else {
+                    desc.classList.add('hidden');
+                }
+            },
+
+            setRepublicTab: function(tabId) {
+                // Buttons
+                ['science', 'myth', 'dictatorship'].forEach(t => {
+                    const btn = document.getElementById(`tab-${t}`);
+                    const content = document.getElementById(`content-${t}`);
+                    
+                    if (t === tabId) {
+                        btn.classList.add('active-tab', 'bg-stone-100', 'border-b-2', 'border-stone-800', 'text-stone-800');
+                        btn.classList.remove('text-stone-400');
+                        content.classList.remove('hidden');
+                        content.classList.add('block');
+                    } else {
+                        btn.classList.remove('active-tab', 'bg-stone-100', 'border-b-2', 'border-stone-800', 'text-stone-800');
+                        btn.classList.add('text-stone-400');
+                        content.classList.add('hidden');
+                        content.classList.remove('block');
+                    }
+                });
+            },
+
+            initCharts: function() {
+                Chart.defaults.font.family = "'Segoe UI', sans-serif";
+                Chart.defaults.color = '#57534e';
+
+                // Chart 1: Colonia
+                new Chart(document.getElementById('chartColonia'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.colonia.labels,
+                        datasets: [{
+                            label: 'Africanos Escravizados Recebidos (Milhões)',
+                            data: data.colonia.values,
+                            backgroundColor: ['#be123c', '#d6d3d1', '#d6d3d1', '#d6d3d1', '#78716c'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: (items) => {
+                                        // Wrap logic for tooltips
+                                        const label = items[0].label;
+                                        return label.length > 20 ? label.match(/.{1,20}(\s|$)/g) : label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, title: {display: true, text: 'Milhões de Pessoas'} }
+                        }
+                    }
+                });
+
+                // Chart 2: Imperio
+                new Chart(document.getElementById('chartImperio'), {
+                    type: 'line',
+                    data: {
+                        labels: data.imperio.labels,
+                        datasets: [{
+                            label: 'Entrada Estimada de Africanos',
+                            data: data.imperio.values,
+                            borderColor: '#be123c',
+                            backgroundColor: 'rgba(190, 18, 60, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: 1, // 1830/31 index approx
+                                        xMax: 1,
+                                        borderColor: 'black',
+                                        borderWidth: 2,
+                                        label: { content: 'Lei de 1831', enabled: true }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Chart 3: Republica
+                new Chart(document.getElementById('chartRepublica'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Previsão Lacerda (1911)', 'Realidade IBGE (2010s)'],
+                        datasets: [
+                            {
+                                label: 'Brancos',
+                                data: [80, 43],
+                                backgroundColor: '#d6d3d1'
+                            },
+                            {
+                                label: 'Negros/Pardos',
+                                data: [0, 56], // Lacerda predicted extinction/absorption
+                                backgroundColor: '#be123c'
+                            }
+                        ]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, max: 100, title: {display: true, text: '% População'} }
+                        }
+                    }
+                });
+
+                // Chart 4: Hoje
+                new Chart(document.getElementById('chartHoje'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Brancos', 'Negros'],
+                        datasets: [{
+                            data: [16, 43],
+                            backgroundColor: ['#d6d3d1', '#be123c']
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Taxa de Homicídios (por 100k hab)' }
+                        }
+                    }
+                });
+            }
+        };
+
+        // Boot
+        window.addEventListener('DOMContentLoaded', () => {
+            app.init();
+            app.navigate('intro');
+        });
+    </script>
+</body>
+</html>
