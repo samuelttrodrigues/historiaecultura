@@ -97,6 +97,7 @@
             <button onclick="app.navigate('imperio')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-imperio">Império (Estrutura)</button>
             <button onclick="app.navigate('republica')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-republica">República (Acabamento)</button>
             <button onclick="app.navigate('hoje')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-hoje">Contemporaneidade</button>
+            <button onclick="app.navigate('autora')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-autora">Sobre a Autora</button>
         </div>
     </nav>
 
@@ -341,6 +342,57 @@
                         <p class="text-rose-900">
                             Reconhecer que o racismo é a infraestrutura do Brasil não é um ato de culpa, mas o primeiro passo para reformar a estrutura da casa.
                         </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: SOBRE A AUTORA E A OBRA -->
+        <section id="view-autora" class="hidden-content space-y-8 py-8 border-t-2 border-stone-200 mt-12">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-stone-800 mb-8 text-center">Sobre a Autora e a Obra</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- Text Content -->
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-stone-800 mb-4">Ynaê Lopes dos Santos</h3>
+                            <p class="text-base text-stone-700 leading-relaxed font-medium mb-4">
+                                Historiadora e professora na Universidade Federal Fluminense (UFF), Ynaê Lopes dos Santos é especialista em história da escravidão e das Américas. Sua pesquisa e obra acadêmica focam em compreender como o racismo estruturou (e continua estruturando) a sociedade brasileira.
+                            </p>
+                            <p class="text-base text-stone-700 leading-relaxed font-medium mb-6">
+                                Em "<strong>Racismo Brasileiro: Uma História da Formação do País</strong>" (2022), a autora oferece uma análise rigorosa de como o racismo não foi um acidente histórico, mas o fundamento sobre o qual a nação foi construída, desde a Colônia até os dias atuais.
+                            </p>
+                        </div>
+
+                        <div class="bg-stone-50 p-6 rounded border-l-4 border-rose-700">
+                            <p class="text-sm text-stone-800 font-medium italic">
+                                "Não é possível construir o futuro sem retornar ao passado para entender o que foi feito." <br><span class="font-normal">– Conceito de Sankofa.</span>
+                            </p>
+                        </div>
+
+                        <div class="pt-2">
+                            <a href="https://www.amazon.com.br/Racismo-brasileiro-hist%C3%B3ria-forma%C3%A7%C3%A3o-pa%C3%ADs/dp/6556922870" target="_blank" rel="noopener noreferrer" class="inline-block bg-rose-700 hover:bg-rose-800 text-white font-bold py-3 px-8 rounded transition-colors shadow-md">
+                                Adquirir o Livro
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Images -->
+                    <div class="flex flex-col gap-6 lg:sticky lg:top-24">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                            <img src="https://flip.org.br/wp-content/uploads/2025/06/autor_ynae-lopes-dos-santos.jpg" alt="Foto da autora Ynaê Lopes dos Santos" class="w-full h-auto object-cover">
+                            <div class="p-4 text-center bg-stone-50">
+                                <p class="text-stone-700 font-semibold text-sm">Ynaê Lopes dos Santos</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                            <img src="https://m.media-amazon.com/images/I/71YZGGiv3ZL.jpg" alt="Capa do livro Racismo Brasileiro: Uma História da Formação do País" class="w-full h-auto object-cover">
+                            <div class="p-4 text-center bg-stone-50">
+                                <p class="text-stone-700 font-semibold text-sm">Racismo Brasileiro<br>Uma História da Formação do País (2022)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
