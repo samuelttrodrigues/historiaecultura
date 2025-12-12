@@ -118,7 +118,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-8 rounded shadow text-center border-t-4 border-stone-800 hover:shadow-md transition-shadow">
+                <div onclick="app.navigate('colonia')" class="bg-white p-8 rounded shadow text-center border-t-4 border-stone-800 hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
                     <div class="text-5xl mb-4">⚓</div>
                     <h3 class="font-bold text-lg mb-2">Invenção</h3>
                     <p class="text-base text-stone-700 font-medium">A criação da raça nos fortes africanos.</p>
@@ -128,7 +128,7 @@
                     <h3 class="font-bold text-lg mb-2">Manutenção</h3>
                     <p class="text-base text-stone-700 font-medium">Leis criadas para excluir (1824, 1850).</p>
                 </div>
-                <div class="bg-white p-8 rounded shadow text-center border-t-4 border-stone-800 hover:shadow-md transition-shadow">
+                <div onclick="app.navigate('republica')" class="bg-white p-8 rounded shadow text-center border-t-4 border-stone-800 hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
                     <div class="text-5xl mb-4">🧬</div>
                     <h3 class="font-bold text-lg mb-2">Atualização</h3>
                     <p class="text-base text-stone-700 font-medium">Do racismo científico à necropolítica.</p>
@@ -139,18 +139,18 @@
         <!-- SECTION: COLONIA -->
         <section id="view-colonia" class="hidden-content space-y-8">
             <div class="max-w-3xl mb-8">
-                <h2 class="text-3xl font-bold text-stone-800 mb-4">Colônia: A Invenção do Outro</h2>
-                <p class="text-lg text-stone-700 leading-relaxed font-medium">
+                <h2 class="text-4xl font-bold text-stone-800 mb-4">Colônia: A Invenção do Outro</h2>
+                <p class="text-xl text-stone-700 leading-relaxed font-medium">
                     Nos fortes africanos e nos navios negreiros, seres humanos diversos (Bantos, Iorubás, Fons) foram transformados em mercadoria homogênea: o "Negro". <br></br>O Brasil não <strong>teve</strong> escravidão; ele <strong>foi</strong> a escravidão.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Chart: Scale of Trade -->
-                <div class="bg-white p-8 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-3 text-lg">A Escala do Tráfico (Milhões de Pessoas)</h3>
-                    <p class="text-base text-stone-700 mb-4 font-medium leading-relaxed">
-                        O Brasil recebeu 40% de todo o tráfico transatlântico. <br></br> A escala do tráfico para o Brasil foi quase quatro vezes maior que para a América Espanhola, o Caribe Britânico e o Estados Unidos combinados.
+                <div class="bg-gradient-to-br from-white to-stone-50 p-8 rounded-lg shadow-sm border-t-4 border-rose-700">
+                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-3 text-xl">A Escala do Tráfico (Milhões de Pessoas)</h3>
+                    <p class="text-lg text-stone-700 mb-4 font-medium leading-relaxed">
+                        O Brasil recebeu <strong>40% de todo o tráfico transatlântico</strong>. <br></br> A escala do tráfico para o Brasil foi quase <strong>quatro vezes maior</strong> que para a América Espanhola, o Caribe Britânico e o Estados Unidos combinados.
                     </p>
                     <div class="chart-container">
                         <canvas id="chartColonia"></canvas>
@@ -158,27 +158,27 @@
                 </div>
 
                 <!-- Interactive Hierarchy -->
-                <div class="bg-white p-8 rounded-lg shadow-sm flex flex-col">
-                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-3 text-lg">Arquitetura Social da Colônia</h3>
-                    <p class="text-base text-stone-700 mb-8 font-medium">Clique nas camadas para entender a função estratégica de cada grupo.</p>
+                <div class="bg-gradient-to-br from-white to-stone-50 p-8 rounded-lg shadow-sm border-t-4 border-emerald-600 flex flex-col">
+                    <h3 class="font-bold text-stone-800 mb-4 border-b pb-3 text-xl">Arquitetura Social da Colônia</h3>
+                    <p class="text-lg text-stone-700 mb-8 font-medium">Clique nas camadas para entender a função estratégica de cada grupo.</p>
                     
-                    <div class="flex-grow space-y-2">
-                        <div onclick="app.toggleHierarchy('top')" class="interactive-card bg-stone-800 text-white p-4 rounded text-center font-bold relative group">
-                            Brancos (Senhores)
-                            <div id="desc-top" class="hidden mt-2 text-xs font-normal text-stone-300 bg-stone-900 p-2 rounded">
-                                Minoria demográfica. Detentores do poder político e religioso. Usavam o terror exemplar para controle.
+                    <div class="flex-grow space-y-3">
+                        <div onclick="app.toggleHierarchy('top')" class="interactive-card bg-stone-800 text-white p-5 rounded-lg text-center font-bold relative group hover:shadow-lg transition-shadow cursor-pointer">
+                            <span class="text-lg"> Brancos (Senhores)</span>
+                            <div id="desc-top" class="hidden mt-3 text-sm font-normal text-stone-200 bg-stone-900 p-3 rounded">
+                                <strong>Minoria demográfica.</strong> Detentores do poder político e religioso. Usavam o terror exemplar para controle absoluto.
                             </div>
                         </div>
-                        <div onclick="app.toggleHierarchy('mid')" class="interactive-card bg-amber-600 text-white w-11/12 mx-auto p-4 rounded text-center font-bold relative">
-                            Mestiços & Pardos (Zona Tampão)
-                            <div id="desc-mid" class="hidden mt-2 text-xs font-normal text-amber-100 bg-amber-800 p-2 rounded">
-                                Fruto da violência sexual. Estratégia de "dividir para governar". Cooptados com pequenos privilégios para não se aliarem aos negros.
+                        <div onclick="app.toggleHierarchy('mid')" class="interactive-card bg-amber-600 text-white w-11/12 mx-auto p-5 rounded-lg text-center font-bold relative hover:shadow-lg transition-shadow cursor-pointer">
+                            <span class="text-lg"> Mestiços & Pardos (Zona Tampão)</span>
+                            <div id="desc-mid" class="hidden mt-3 text-sm font-normal text-amber-100 bg-amber-800 p-3 rounded">
+                                <strong>Fruto da violência sexual.</strong> Estratégia de "dividir para governar". Cooptados com pequenos privilégios para não se aliarem aos negros.
                             </div>
                         </div>
-                        <div onclick="app.toggleHierarchy('bot')" class="interactive-card bg-rose-700 text-white w-10/12 mx-auto p-4 rounded text-center font-bold relative">
-                            Negros (Escravizados)
-                            <div id="desc-bot" class="hidden mt-2 text-xs font-normal text-rose-100 bg-rose-900 p-2 rounded">
-                                "Peças" e semoventes. A base da economia. Negros "da terra" (indígenas) e "na terra" (africanos) geridos por leis distintas.
+                        <div onclick="app.toggleHierarchy('bot')" class="interactive-card bg-rose-700 text-white w-10/12 mx-auto p-5 rounded-lg text-center font-bold relative hover:shadow-lg transition-shadow cursor-pointer">
+                            <span class="text-lg"> Negros (Escravizados)</span>
+                            <div id="desc-bot" class="hidden mt-3 text-sm font-normal text-rose-100 bg-rose-900 p-3 rounded">
+                                <strong>"Peças" e semoventes.</strong> A base da economia. Negros "da terra" (indígenas) e "na terra" (africanos) geridos por leis distintas.
                             </div>
                         </div>
                     </div>
@@ -295,25 +295,59 @@
 
                     <!-- Tab Content: Myth -->
                     <div id="content-myth" class="hidden">
-                        <h3 class="text-xl font-bold text-stone-800 mb-4">Era Vargas e a Democracia Racial</h3>
-                        <p class="text-lg text-stone-700 font-medium mb-4">
-                            Influenciado por <em>Casa-Grande & Senzala</em>, o Estado passa a celebrar a mestiçagem (Samba, Feijoada) como identidade nacional.
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Era Vargas e a Democracia Racial</h3>
+                        <p class="text-xl text-stone-700 font-medium mb-4">
+                            Influenciado por <em>Casa-Grande &amp; Senzala</em>, o Estado passa a celebrar a mestiçagem (Samba, Feijoada) como identidade nacional.
                         </p>
-                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4">
-                            <p class="font-bold text-amber-800">O Efeito Mordaça:</p>
-                            <p class="text-amber-900 text-sm">Se somos todos misturados e iguais, denunciar o racismo torna-se "antipatriótico". Isso desarticulou a luta política negra por décadas.</p>
+                        <div class="bg-white p-4 mb-4 rounded shadow-sm border-l-4 border-stone-800">
+                            <p class="font-bold text-stone-800">O Efeito Mordaça:</p>
+                            <p class="text-stone-700 text-lg">Se somos todos misturados e iguais, denunciar o racismo torna-se "antipatriótico". Isso desarticulou a luta política negra por décadas.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-rose-600">
+                                <p class="font-bold text-stone-800">Frente Negra Brasileira (FNB) — 1931</p>
+                                <p class="text-stone-700 text-lg">Fundada em 1931, a FNB foi o primeiro partido político negro da América Latina. Sua existência prova que havia organização política negra antes do cerco autoritário do Estado Novo.</p>
+                            </div>
+
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-amber-500">
+                                <p class="font-bold text-stone-800">Teatro Experimental do Negro (TEN) — 1944</p>
+                                <p class="text-stone-700 text-lg">Fundado por Abdias do Nascimento, o TEN foi um contra-ataque cultural que exigiu protagonismo negro nos palcos, desafiando as caricaturas e a representação estigmatizada promovida pela cultura oficial.</p>
+                            </div>
+
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-emerald-600">
+                                <p class="font-bold text-stone-800">Projeto UNESCO (Anos 50)</p>
+                                <p class="text-stone-700 text-lg">Pesquisas patrocinadas pela ONU nos anos 50 tentaram demonstrar o "paraíso racial" brasileiro. Sociólogos como Florestan Fernandes demonstraram o contrário: preconceito profundo e desigualdade estrutural, minando cientificamente o mito.</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Tab Content: Dictatorship -->
                     <div id="content-dictatorship" class="hidden">
-                        <h3 class="text-xl font-bold text-stone-800 mb-4">Ditadura Militar</h3>
-                        <p class="text-lg text-stone-700 font-medium mb-4">
-                            O regime elevou a "Democracia Racial" a dogma de Segurança Nacional. Perseguiu movimentos negros e bailes soul.
-                        </p>
-                        <div class="bg-stone-800 text-stone-50 p-4 rounded">
-                            <p class="font-bold">Resistência:</p>
-                            <p class="text-sm">Fundação do Movimento Negro Unificado (MNU) em 1978, denunciando a farsa da harmonia e a violência policial.</p>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Ditadura Militar</h3>
+                        <p class="text-xl text-stone-700 font-medium mb-4">
+                            O regime elevou a "Democracia Racial" a dogma de Segurança Nacional. Perseguiu movimentos negros, censurou organizações e tentou controlar a cultura popular (bailes soul, rádio, imprensa).</p>
+
+                        <div class="bg-white p-4 rounded shadow-sm border-l-4 border-stone-800 mb-4">
+                            <p class="font-bold text-stone-800 text-lg">Resistência organizada</p>
+                            <p class="text-stone-700 text-lg">O Movimento Negro Unificado (MNU), fundado em 1978, foi peça central para denunciar a farsa da harmonia racial e a violência policial.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-rose-600">
+                                <p class="font-bold text-stone-800 text-lg">13 de Maio → 20 de Novembro</p>
+                                <p class="text-stone-700 text-lg">Durante a ditadura houve uma mudança simbólica decisiva: o movimento negro deixou de celebrar o 13 de Maio (a "libertação" pela monarquia) e consolidou o 20 de Novembro (Zumbi dos Palmares) como data de consciência e resistência.</p>
+                            </div>
+
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-amber-500">
+                                <p class="font-bold text-stone-800 text-lg">Influência internacional</p>
+                                <p class="text-stone-700 text-lg">Jovens e militantes foram inspirados pelos Panteras Negras (EUA) e pelos movimentos de independência africanos (Angola, Moçambique), trazendo táticas e discursos que desafiaram o regime militar.</p>
+                            </div>
+
+                            <div class="bg-white p-4 rounded shadow-sm border-l-4 border-emerald-600">
+                                <p class="font-bold text-stone-800 text-lg">Lélia Gonzalez</p>
+                                <p class="text-stone-700 text-lg">Intelectual e ativista-chave, Lélia articulou a relação entre raça e gênero, cunhando conceitos como "Amefricanidade" e ampliando a crítica antirracista durante e após a ditadura.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -325,14 +359,14 @@
             <div class="max-w-3xl mb-8">
                 <h2 class="text-3xl font-bold text-stone-800 mb-4">Contemporaneidade: Necropolítica</h2>
                 <p class="text-lg text-stone-700 leading-relaxed font-medium">
-                    O racismo se modernizou. Não precisa mais de leis explícitas; opera pela estatística. O Estado decide quem deve viver e quem deve morrer.
+                    O racismo se modernizou. Não precisa mais de leis explícitas, agora ele opera pela estatística.<br></br> O Estado decide quem deve viver e quem deve morrer.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white p-8 rounded-lg shadow-sm">
                     <h3 class="font-bold text-stone-800 mb-4 text-lg">"A Carne Mais Barata do Mercado"</h3>
-                    <p class="text-base text-stone-700 mb-4 font-medium leading-relaxed">Taxa de homicídios por 100 mil habitantes (IBGE/IPEA, 2019-2022). A abolição nunca foi concluída na prática da segurança pública.</p>
+                    <p class="text-base text-stone-700 mb-4 font-medium leading-relaxed">Taxa de homicídios por 100 mil habitantes (IPEA, 2013-2023).</p>
                     <div class="chart-container">
                         <canvas id="chartHoje"></canvas>
                     </div>
@@ -342,14 +376,14 @@
                     <div class="bg-stone-100 p-6 rounded border-l-4 border-stone-800">
                         <h4 class="font-bold text-lg mb-2">Sankofa: Volte e Pegue</h4>
                         <p class="text-stone-700">
-                            A obra encerra convidando à ação. Entender que o racismo foi construído (tem história) significa entender que ele pode ser desconstruído.
+                            Entender que o racismo foi construído (<strong>é a história</strong>) significa entender que ele pode ser desconstruído.
                         </p>
                     </div>
                     
                     <div class="bg-rose-50 p-6 rounded border-l-4 border-rose-600">
                         <h4 class="font-bold text-lg text-rose-800 mb-2">O Desafio</h4>
                         <p class="text-rose-900">
-                            Reconhecer que o racismo é a infraestrutura do Brasil não é um ato de culpa, mas o primeiro passo para reformar a estrutura da casa.
+                            A compreensão do racismo como elemento estrutural da formação do Brasil transcende a culpabilidade individual; trata-se de uma condição indispensável para a transformação social efetiva
                         </p>
                     </div>
                 </div>
@@ -367,7 +401,7 @@
                         <div>
                             <h3 class="text-2xl font-bold text-stone-800 mb-4">Ynaê Lopes dos Santos</h3>
                             <p class="text-base text-stone-700 leading-relaxed font-medium mb-4">
-                                Historiadora e professora na Universidade Federal Fluminense (UFF), Ynaê Lopes dos Santos é especialista em história da escravidão e das Américas. Sua pesquisa e obra acadêmica focam em compreender como o racismo estruturou (e continua estruturando) a sociedade brasileira.
+                                Ynaê Lopes dos Santos, Doutora em História Social pela USP e docente da Universidade Federal Fluminense (UFF), consolidou-se como referência nos estudos sobre escravidão e relações raciais nas Américas. Em seu livro "Racismo Brasileiro: Uma História da Formação do País" (2022), a autora articula uma análise estrutural, demonstrando como o sistema escravocrata criou um legado de desigualdade que opera, até hoje, como o principal organizador da hierarquia social brasileira.
                             </p>
                             <p class="text-base text-stone-700 leading-relaxed font-medium mb-6">
                                 Em "<strong>Racismo Brasileiro: Uma História da Formação do País</strong>" (2022), a autora oferece uma análise rigorosa de como o racismo não foi um acidente histórico, mas o fundamento sobre o qual a nação foi construída, desde a Colônia até os dias atuais.
@@ -573,7 +607,7 @@
                 new Chart(document.getElementById('chartRepublica'), {
                     type: 'bar',
                     data: {
-                        labels: ['Previsão Lacerda (1911)', 'Realidade IBGE (2010s)'],
+                        labels: ['Previsão Lacerda (1911)', 'Realidade IBGE (2022)'],
                         datasets: [
                             {
                                 label: 'Brancos',
@@ -581,7 +615,7 @@
                                 backgroundColor: '#d6d3d1'
                             },
                             {
-                                label: 'Negros/Pardos',
+                                label: 'Negros',
                                 data: [0, 56], // Lacerda predicted extinction/absorption
                                 backgroundColor: '#be123c'
                             }
@@ -601,14 +635,14 @@
                     data: {
                         labels: ['Brancos', 'Negros'],
                         datasets: [{
-                            data: [16, 43],
+                            data: [10.6, 28.9],
                             backgroundColor: ['#d6d3d1', '#be123c']
                         }]
                     },
                     options: {
                         maintainAspectRatio: false,
                         plugins: {
-                            title: { display: true, text: 'Taxa de Homicídios (por 100k hab)' }
+                            title: { display: true, text: 'Taxa de Homicídios (por 100mil habitantes) [2025 IPEA]' }
                         }
                     }
                 });
