@@ -77,6 +77,25 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Customized Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4; /* stone-100 */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #be123c; /* rose-700 */
+            border-radius: 6px;
+            border: 2px solid #f5f5f4;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #881337; /* rose-900 */
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -98,6 +117,7 @@
             <button onclick="app.navigate('republica')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-republica">República (Acabamento)</button>
             <button onclick="app.navigate('hoje')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-hoje">Contemporaneidade</button>
             <button onclick="app.navigate('autora')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-autora">Sobre a Autora</button>
+            <button onclick="app.navigate('video')" class="nav-btn px-6 py-4 font-bold text-stone-600 hover:bg-stone-300 transition-colors whitespace-nowrap" id="btn-video">Vídeo com Autora</button>
         </div>
     </nav>
 
@@ -395,10 +415,10 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold text-stone-800 mb-8 text-center">Sobre a Autora e a Obra</h2>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Author Image (left) -->
-                    <div class="order-1 lg:order-1">
-                        <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="lg:w-1/4 flex-shrink-0">
+                        <div class="sticky top-24 bg-white rounded-lg overflow-hidden shadow-md">
                             <img src="https://flip.org.br/wp-content/uploads/2025/06/autor_ynae-lopes-dos-santos.jpg" alt="Foto da autora Ynaê Lopes dos Santos" class="w-full h-auto object-cover">
                             <div class="p-4 text-center bg-stone-50">
                                 <p class="text-stone-700 font-semibold text-sm">Ynaê Lopes dos Santos</p>
@@ -407,7 +427,7 @@
                     </div>
 
                     <!-- Text Content (center) -->
-                    <div class="order-3 lg:order-2 space-y-6">
+                    <div class="lg:w-1/2 space-y-6">
                         <div>
                             <h3 class="text-2xl font-bold text-stone-800 mb-4">Ynaê Lopes dos Santos</h3>
                             <p class="text-base text-stone-700 leading-relaxed font-medium mb-4">
@@ -432,8 +452,8 @@
                     </div>
 
                     <!-- Book Image (right) -->
-                    <div class="order-2 lg:order-3 lg:sticky lg:top-24">
-                        <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <div class="lg:w-1/4 flex-shrink-0">
+                        <div class="sticky top-24 bg-white rounded-lg overflow-hidden shadow-md">
                             <img src="https://m.media-amazon.com/images/I/71YZGGiv3ZL.jpg" alt="Capa do livro Racismo Brasileiro: Uma História da Formação do País" class="w-full h-auto object-cover">
                             <div class="p-4 text-center bg-stone-50">
                                 <p class="text-stone-700 font-semibold text-sm">Racismo Brasileiro<br>Uma História da Formação do País (2022)</p>
@@ -446,14 +466,13 @@
 
         <!-- SECTION: VIDEO SOBRE AUTORA -->
         <section id="view-video" class="hidden-content space-y-8 py-8 border-t-2 border-stone-200 mt-8">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-2xl font-bold text-stone-800 mb-4">Assista: Sobre a Autora</h2>
-                <p class="text-lg text-stone-700 mb-6">Assista a uma entrevista/colóquio com Ynaê Lopes dos Santos diretamente aqui.</p>
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-stone-800 mb-4 text-center">PET Filosofia - UFMG</h2>
+                <p class="text-xl text-stone-700 mb-8 text-center">Filosofia na praça com Ynaê Lopes dos Santos.</p>
 
-                <div class="relative" style="padding-top:56.25%;">
-                    <iframe src="https://www.youtube.com/embed/FDhxDYE8CTo" title="Vídeo sobre a autora" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+                <div class="relative w-full" style="padding-bottom: 56.25%;">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/FDhxDYE8CTo?si=jcOGoYVOEm8VRj5X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
-                <p class="text-sm text-stone-500 mt-4">Substitua <strong>VIDEO_ID</strong> pelo id do vídeo do YouTube desejado.</p>
             </div>
         </section>
 
@@ -462,7 +481,7 @@
     <!-- Footer -->
     <footer class="bg-stone-900 text-stone-400 p-8 text-center mt-8">
         <p class="mb-2">Baseado na obra de Ynaê Lopes dos Santos (2022)</p>
-        <p class="text-sm text-stone-600">Criado por Samuel Thiago Telles Rodrigues</p>
+        <p class="text-sm text-stone-600">Site projeto criado por Samuel Thiago Telles Rodrigues</p>
     </footer>
 
     <!-- Logic -->
